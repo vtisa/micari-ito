@@ -1,0 +1,91 @@
+{% extends 'admin/change_list.html' %}
+{% load static %}
+
+{% block content %}
+<div style="width: 100%;">
+    {% if chart_data %}
+    <canvas id="gananciaMesChart"></canvas>
+    {% endif %}
+</div>
+{{ block.super }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('gananciaMesChart').getContext('2d');
+        if (ctx) {
+            var chartData = JSON.parse('{{ chart_data|safe }}');
+            var chartLabels = chartData[0];
+            var chartReservas = chartData[1];
+            var chartVentas = chartData[2];
+            var chartTitle = chartData[3];
+
+            var data = {
+                labels: chartLabels,
+                datasets: [
+                    {
+                        label: 'Reservas',
+                        data: chartReservas,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        fill: true,
+                    },
+                    {
+                        label: 'Ventas',
+                        data: chartVentas,
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                        fill: true,
+                    }
+                ]
+            };
+
+            var options = {
+                scales: {
+                    y: {
+                        min: 0,
+                        ticks: {
+                            stepSize: 5,
+                            callback: function(value) {
+                                return value.toFixed(0);
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Ganancia Monto'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Días del Mes'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(context) {
+                                return 'Día ' + context[0].label;
+                            },
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.raw + ' soles';
+                            }
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            color: 'rgba(0, 0, 0, 0.7)'
+                        }
+                    }
+                }
+            };
+
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: options
+            });
+        }
+    });
+</script>
+{% endblock %}

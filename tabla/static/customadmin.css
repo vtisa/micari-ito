@@ -1,0 +1,49 @@
+/* Button Styling */
+.button {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background-color: #e49d9d; /* More vibrant color */
+    color: white; /* Button text color */
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.button:hover {
+    text-decoration: none;
+    background-color: #c0392b; /* Darker shade on hover */
+    opacity: 0.9;
+}
+
+.button:focus {
+    outline: none;
+}
+
+/* Accent Class */
+[class*="accent-"] a.btn-secondary {
+    color: #12c7be9d;
+    font-size: 16px; /* Consistent font size */
+}
+
+
+/* Field Styling */
+.field-crud_buttons {
+    white-space: nowrap;
+    display: flex; /* Flexbox for better alignment */
+    gap: 8px; /* Space between buttons */
+}
+
+/* Accent Primary Class Text Color */
+.accent-primary .btn-link, 
+.accent-primary .nav-tabs .nav-link, 
+.accent-primary a:not(.dropdown-item):not(.btn-app):not(.nav-link):not(.brand-link):not(.page-link):not(.btn) {
+    color: #0b68d1; /* Text color for accent-primary */
+}
